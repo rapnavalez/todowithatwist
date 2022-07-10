@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { TodoContext } from '../ContextProvider';
 
 export default function Todo() {
@@ -14,47 +14,48 @@ export default function Todo() {
   };
 
   const deleteTodo = (e) => {
-    const id = e.target.parentElement;
-    const parent = id.parentElement;
-    const index = Array.from(parent.children).indexOf(id);
-    setStateTodos((prev) => prev.splice(index, 1));
-
-    setTimeout(() => {
-      localStorage.setItem('todos', JSON.stringify(stateTodos));
-      setStateTodos(JSON.parse(localStorage.getItem('todos')) || []);
-    }, 100);
+    let id = e.target.parentElement.id;
+    let newTodos = stateTodos.filter((todo) => todo.id !== parseInt(id));
+    localStorage.setItem('todos', JSON.stringify(newTodos));
+    setStateTodos(JSON.parse(localStorage.getItem('todos')) || []);
   };
 
   return (
     <ul className='todos'>
-      {stateTodos.map((todo) => (
-        <li className='todo' key={todo.id} id={todo.id}>
-          <button
-            className='checkbox'
-            type='submit'
-            onClick={markAsCompleted}
-            style={{ animation: 'checkboxAdded .5s forwards' }}
-          >
+      {stateTodos.length === 0 ? (
+        <li className='todo'>
+          <h3>No todos!!</h3>
+        </li>
+      ) : (
+        stateTodos.map((todo) => (
+          <li className='todo' key={todo.id} id={todo.id}>
+            <button
+              className='checkbox'
+              type='submit'
+              onClick={markAsCompleted}
+              style={{ animation: 'checkboxAdded .5s forwards' }}
+            >
+              <img
+                className='check-icon'
+                src='./images/icon-check.svg'
+                alt='checkbox'
+              />
+            </button>
+            <h3
+              className='todo-name'
+              style={{ animation: 'checkedInput 1s reverse' }}
+            >
+              {todo.name}
+            </h3>
             <img
-              className='check-icon'
-              src='./images/icon-check.svg'
+              onClick={deleteTodo}
+              className='cross-icon'
+              src='./images/icon-cross.svg'
               alt='checkbox'
             />
-          </button>
-          <h3
-            className='todo-name'
-            style={{ animation: 'checkedInput 1s reverse' }}
-          >
-            {todo.name}
-          </h3>
-          <img
-            onClick={deleteTodo}
-            className='cross-icon'
-            src='./images/icon-cross.svg'
-            alt='checkbox'
-          />
-        </li>
-      ))}
+          </li>
+        ))
+      )}
     </ul>
   );
 }

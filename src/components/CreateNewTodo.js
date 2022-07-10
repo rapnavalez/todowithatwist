@@ -7,19 +7,17 @@ export default function CreateNewTodo() {
   const { storageTodos } = useContext(TodoContext);
   const [stateTodos, setStateTodos] = storageTodos;
 
-  const saveToStorage = (id, todo, status) => {
-    setStateTodos((prev) => prev.push({ id: id, name: todo, status: status }));
-    localStorage.setItem('todos', JSON.stringify(stateTodos));
-    setStateTodos(JSON.parse(localStorage.getItem('todos')));
-  };
-
   const addTodo = (e) => {
     e.preventDefault();
-    let newTodo;
     if (createNewInput.current.value === '' || isChecked) return;
     setIsChecked((prev) => !prev);
-    newTodo = createNewInput.current.value;
-    saveToStorage(Math.floor(Math.random() * 1000), newTodo, 'active');
+    let todo = createNewInput.current.value;
+    let id = Math.floor(Math.random() * 100000);
+    let status = 'active';
+    let newTodo = { id: id, name: todo, status: status };
+    let existingTodos = stateTodos.map((todo) => todo);
+    localStorage.setItem('todos', JSON.stringify([...existingTodos, newTodo]));
+    setStateTodos(JSON.parse(localStorage.getItem('todos')) || []);
     setTimeout(() => {
       setIsChecked((prev) => !prev);
       createNewInput.current.value = '';
