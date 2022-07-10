@@ -275,6 +275,8 @@ header {
   -webkit-box-pack: start;
       -ms-flex-pack: start;
           justify-content: start;
+  -webkit-transition: all 0.5s ease-in-out;
+  transition: all 0.5s ease-in-out;
 }
 
 .todos {
@@ -315,7 +317,8 @@ header {
   padding: 20px;
 }
 
-.todos .todo .todo-name {
+.todos .todo .todo-name,
+.todos .todo h3 {
   width: 90%;
   padding: 5px 10px;
   font-size: 1.1em;
@@ -378,4 +381,80 @@ header {
 .checkedInput {
   -webkit-animation: checkedInput 1s forwards;
           animation: checkedInput 1s forwards;
+}
+
+.status {
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  padding: 20px;
+}
+
+.status .items-left,
+.status .clear-completed {
+  font-size: 0.85em;
+  color: var(--dark-grayish);
+  font-weight: 400;
+}
+
+.status .clear-completed {
+  cursor: pointer;
+  color: red;
+}
+
+.status .clear-completed:hover {
+  color: var(--very-dark-grayish);
+}
+
+.status .inactive {
+  color: var(--light-grayish);
+  cursor: not-allowed;
+}
+
+.status .inactive:hover {
+  color: var(--light-grayish) !important;
+}
+
+.status .filters {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  gap: 20px;
+}
+
+.status .filters .filter {
+  font-size: 0.85em;
+  color: var(--dark-grayish);
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.status .filters .filter:hover {
+  color: var(--very-dark-grayish);
+}
+
+.status .filters .active {
+  color: var(--primary-blue);
+}
+
+.status .filters .active:hover {
+  color: var(--primary-blue);
+}
+
+.status .filters .inactive {
+  color: var(--light-grayish);
+  cursor: not-allowed;
 }

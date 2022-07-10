@@ -16,7 +16,8 @@
     border-bottom: 1px solid var(--very-light-grayish);
     padding: 20px;
 
-    .todo-name {
+    .todo-name,
+    h3 {
       width: 90%;
       padding: 5px 10px;
       font-size: 1.1em;
