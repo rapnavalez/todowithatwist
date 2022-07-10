@@ -1,0 +1,30 @@
+.todo--create-new {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: start;
+  width: 100%;
+  height: 3.5em;
+  border-radius: 5px;
+  background-color: var(--primary-light);
+  padding: 0 20px;
+  overflow: hidden;
+
+  .checked {
+    animation: checked 1s forwards;
+  }
+
+  .create-new-input {
+    height: 100%;
+    width: 80%;
+    padding: 5px 10px;
+    border: none;
+    font-size: 1.2em;
+    background-color: transparent;
+    font-family: 'Josefin Sans', sans-serif;
+
+    &:focus {
+      outline: none;
+    }
+  }
+}

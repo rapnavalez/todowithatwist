@@ -1,0 +1,38 @@
+.todos {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: baseline;
+  list-style: none;
+
+  .todo {
+    height: 65px;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: baseline;
+    border-bottom: 1px solid var(--very-light-grayish);
+    padding: 20px;
+
+    .todo-name {
+      width: 90%;
+      padding: 5px 10px;
+      font-size: 1.1em;
+      font-weight: 400;
+      color: var(--vary-dark-grayish);
+      background-color: transparent;
+      font-family: 'Josefin Sans', sans-serif;
+    }
+
+    .cross-icon {
+      cursor: pointer;
+    }
+  }
+
+  .checked ~ .todo-name {
+    text-decoration: line-through;
+    color: var(--very-light-grayish);
+  }
+}

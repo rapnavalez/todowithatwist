@@ -1,0 +1,18 @@
+.todo--top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+
+  .title {
+    font-size: 2.5em;
+    font-weight: 700;
+    letter-spacing: 15px;
+    color: #fff;
+    line-height: 1.5;
+  }
+
+  .theme-switch {
+    cursor: pointer;
+  }
+}

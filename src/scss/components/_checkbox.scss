@@ -1,0 +1,38 @@
+.checkbox {
+  height: 25px;
+  width: 25px;
+  margin-right: 20px;
+  cursor: pointer;
+  border: 2px solid var(--light-grayish);
+  background-color: transparent;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &:hover {
+    background: linear-gradient(#fff, #fff) padding-box,
+      var(--gradient-bg) border-box;
+    border: 2px solid transparent;
+  }
+
+  img {
+    width: 15px;
+    height: 15px;
+  }
+}
+
+.checked {
+  background: var(--gradient-bg) border-box;
+  border: 2px solid transparent;
+
+  &:hover {
+    background: var(--gradient-bg) border-box;
+    border: 2px solid transparent;
+    opacity: 0.7;
+  }
+}
+
+.checkedInput {
+  animation: checkedInput 1s forwards;
+}

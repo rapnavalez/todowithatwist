@@ -1,0 +1,12 @@
+main {
+  width: 100%;
+  position: absolute;
+  bottom: 50%;
+  top: 0;
+  left: 0;
+  right: 0;
+  transform: translateY(10%);
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+}
