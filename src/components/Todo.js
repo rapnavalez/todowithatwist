@@ -45,10 +45,6 @@ export default function Todo() {
     return targetOrder;
   };
 
-  const returnStyleToNormal = (e) => {
-    e.target.classList.remove('hovered');
-  };
-
   const allowDrop = (e) => {
     e.preventDefault();
     if (e.target.getAttribute('draggable') != 'true') return;
@@ -77,7 +73,6 @@ export default function Todo() {
     e.target.classList.remove('hovered');
 
     targetOrder = targetOrder > 4 ? '5' : targetOrder;
-
     if (targetOrder >= dragged.style.order) {
       dragged.style.order = targetOrder;
       e.target.style.order = `${
@@ -93,8 +88,6 @@ export default function Todo() {
           : '1'
       }`;
     }
-
-    document.querySelectorAll('.todo').forEach((el) => el);
   };
 
   return (
@@ -121,7 +114,7 @@ export default function Todo() {
               onDragEnd={dragEnd}
               style={{ order: index + 1 }}
               onDragEnter={showOrderNumber}
-              onDragLeave={returnStyleToNormal}
+              onDragLeave={(e) => e.target.classList.remove('hovered')}
             >
               <button
                 className={`checkbox ${
