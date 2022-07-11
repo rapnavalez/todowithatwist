@@ -8,9 +8,18 @@ export const TodoProvider = (props) => {
   );
   const [filter, setFilter] = useState('all');
 
+  const setThenRetrieveTodos = (todos) => {
+    localStorage.setItem('todos', JSON.stringify(todos));
+    setTodos(JSON.parse(localStorage.getItem('todos')) || []);
+    todos.sort((a, b) => a - b);
+  };
   return (
     <TodoContext.Provider
-      value={{ storageTodos: [todos, setTodos], filter: [filter, setFilter] }}
+      value={{
+        contextTodos: [todos, setTodos],
+        contextFilter: [filter, setFilter],
+        contextSetThenRetrieveTodos: setThenRetrieveTodos,
+      }}
     >
       {props.children}
     </TodoContext.Provider>

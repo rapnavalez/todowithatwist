@@ -1,25 +1,27 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import { TodoContext } from '../ContextProvider';
 
 export default function TodoBottom() {
-  const { storageTodos, filter } = useContext(TodoContext);
-  const [stateTodos, setStateTodos] = storageTodos;
-  const [stateFilter, stateSetFilter] = filter;
+  const { contextTodos, contextFilter, contextSetThenRetrieveTodos } =
+    useContext(TodoContext);
+  const [todos, setTodos] = contextTodos;
+  const [filter, setFilter] = contextFilter;
+  const setThenRetrieveTodos = contextSetThenRetrieveTodos;
 
   const filterTodos = (e) => {
     if (e.target.classList.contains('inactive')) return;
     let filter = e.target.id;
-    stateSetFilter(filter);
+    setFilter(filter);
   };
 
   const clearCompleted = () => {
-    let notToBeCleared = stateTodos.filter((todo) => todo.status === 'active');
-    localStorage.setItem('todos', JSON.stringify([...notToBeCleared]));
-    setStateTodos(JSON.parse(localStorage.getItem('todos')) || []);
+    let notToBeCleared = todos.filter((todo) => todo.status === 'active');
+    setThenRetrieveTodos([...notToBeCleared]);
   };
 
-  let completedTodos = stateTodos.filter((todo) => todo.status === 'completed');
-  let activeTodos = stateTodos.filter((todo) => todo.status === 'active');
+  let completedTodos = todos.filter((todo) => todo.status === 'completed');
+  let activeTodos = todos.filter((todo) => todo.status === 'active');
+
   return (
     <div className='status'>
       <h5 className='items-left'>
@@ -28,7 +30,7 @@ export default function TodoBottom() {
       <div className='filters'>
         <h5
           onClick={filterTodos}
-          className={`filter ${stateFilter === 'all' && 'active'}`}
+          className={`filter ${filter === 'all' && 'active'}`}
           id='all'
         >
           All
@@ -36,7 +38,7 @@ export default function TodoBottom() {
         <h5
           onClick={filterTodos}
           className={`filter ${!activeTodos.length > 0 && 'inactive'} ${
-            stateFilter === 'active' && 'active'
+            filter === 'active' && 'active'
           }`}
           id='active'
         >
@@ -45,7 +47,7 @@ export default function TodoBottom() {
         <h5
           onClick={filterTodos}
           className={`filter ${!completedTodos.length > 0 && 'inactive'} ${
-            stateFilter === 'completed' && 'active'
+            filter === 'completed' && 'active'
           }`}
           id='completed'
         >

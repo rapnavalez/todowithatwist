@@ -2,11 +2,13 @@ import React, { useContext, useEffect, useState } from 'react';
 import { TodoContext } from '../ContextProvider';
 
 export default function Todo() {
-  const { storageTodos, filter } = useContext(TodoContext);
-  const [stateTodos, setStateTodos] = storageTodos;
-  const [stateFilter, stateSetFilter] = filter;
+  const { contextTodos, contextFilter, contextSetThenRetrieveTodos } =
+    useContext(TodoContext);
+  const [todos, setTodos] = contextTodos;
+  const filter = contextFilter[0];
+  const setThenRetrieveTodos = contextSetThenRetrieveTodos;
 
-  const markAsCompleted = (e) => {
+  const updateStatus = (e) => {
     let id;
     if (e.target.classList.contains('check-icon')) {
       e.target.parentElement.classList.toggle('checked');
@@ -16,38 +18,34 @@ export default function Todo() {
       id = e.target.parentElement.id;
     }
 
-    let toBeUpdated = stateTodos.filter((todo) => todo.id === parseInt(id));
-    let notToBeUpdated = stateTodos.filter((todo) => todo.id !== parseInt(id));
+    let toBeUpdated = todos.filter((todo) => todo.id === parseInt(id));
+    let notToBeUpdated = todos.filter((todo) => todo.id !== parseInt(id));
     if (toBeUpdated[0].status === 'completed') {
       toBeUpdated[0].status = 'active';
     } else {
       toBeUpdated[0].status = 'completed';
     }
     toBeUpdated = Object.assign({}, ...toBeUpdated);
-    localStorage.setItem(
-      'todos',
-      JSON.stringify([toBeUpdated, ...notToBeUpdated])
-    );
-    setStateTodos(JSON.parse(localStorage.getItem('todos')) || []);
+    setThenRetrieveTodos([toBeUpdated, ...notToBeUpdated]);
   };
 
   const deleteTodo = (e) => {
     let id = e.target.parentElement.id;
-    let newTodos = stateTodos.filter((todo) => todo.id !== parseInt(id));
-    localStorage.setItem('todos', JSON.stringify(newTodos));
-    setStateTodos(JSON.parse(localStorage.getItem('todos')) || []);
+    let newTodos = todos.filter((todo) => todo.id !== parseInt(id));
+    setThenRetrieveTodos(newTodos);
   };
+
   return (
     <ul className='todos'>
-      {stateTodos.length === 0 ? (
+      {todos.length === 0 ? (
         <li className='todo'>
           <h3 className='todo-name'>No todos!!</h3>
         </li>
       ) : (
-        stateTodos
+        todos
           .filter((todo) =>
-            stateFilter !== 'all'
-              ? todo.status === stateFilter
+            filter !== 'all'
+              ? todo.status === filter
               : todo.status === todo.status
           )
           .map((todo) => (
@@ -57,7 +55,7 @@ export default function Todo() {
                   todo.status === 'completed' && 'checked'
                 }`}
                 type='submit'
-                onClick={markAsCompleted}
+                onClick={updateStatus}
                 style={{
                   animation: `${
                     todo.status === 'completed'

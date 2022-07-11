@@ -2,12 +2,13 @@ import React, { useState, useRef, useContext, useEffect } from 'react';
 import { TodoContext } from '../ContextProvider';
 
 export default function CreateNewTodo() {
+  const { contextTodos, contextSetThenRetrieveTodos } = useContext(TodoContext);
   const [isChecked, setIsChecked] = useState(false);
   const createNewInput = useRef();
-  const { storageTodos } = useContext(TodoContext);
-  const [stateTodos, setStateTodos] = storageTodos;
+  const todos = contextTodos[0];
+  const setThenRetrieveTodos = contextSetThenRetrieveTodos;
 
-  const addTodo = (e) => {
+  const createTodo = (e) => {
     e.preventDefault();
     if (createNewInput.current.value === '' || isChecked) return;
     setIsChecked((prev) => !prev);
@@ -15,9 +16,8 @@ export default function CreateNewTodo() {
     let id = Math.floor(Math.random() * 100000);
     let status = 'active';
     let newTodo = { id: id, name: todo, status: status };
-    let existingTodos = stateTodos.map((todo) => todo);
-    localStorage.setItem('todos', JSON.stringify([...existingTodos, newTodo]));
-    setStateTodos(JSON.parse(localStorage.getItem('todos')) || []);
+    let existingTodos = todos.map((todo) => todo);
+    setThenRetrieveTodos([...existingTodos, newTodo]);
     setTimeout(() => {
       setIsChecked((prev) => !prev);
       createNewInput.current.value = '';
@@ -28,7 +28,7 @@ export default function CreateNewTodo() {
     <form className='todo--create-new'>
       <button
         className={`checkbox ${isChecked && 'checked'}`}
-        onClick={addTodo}
+        onClick={createTodo}
         type='submit'
       >
         {isChecked && <img src='./images/icon-check.svg' alt='checkbox' />}
