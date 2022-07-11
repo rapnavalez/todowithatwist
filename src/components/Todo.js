@@ -35,8 +35,70 @@ export default function Todo() {
     setThenRetrieveTodos(newTodos);
   };
 
+  //drag and drop functions below
+
+  let targetOrder;
+  const showOrderNumber = (e) => {
+    targetOrder = e.target.style.order;
+    if (!e.target.classList.contains('todo')) return;
+    e.target.classList.add('hovered');
+    return targetOrder;
+  };
+
+  const returnStyleToNormal = (e) => {
+    e.target.classList.remove('hovered');
+  };
+
+  const allowDrop = (e) => {
+    e.preventDefault();
+    if (e.target.getAttribute('draggable') != 'true') return;
+    e.dataTransfer.dropEffect = 'all';
+  };
+
+  const drag = (e) => {
+    e.dataTransfer.setData('id', e.target.id);
+    e.target.classList.add('drag');
+    e.target.classList.remove('dropped');
+  };
+
+  const dragEnd = (e) => {
+    e.target.classList.add('dropped');
+    e.target.classList.remove('drag');
+  };
+
+  const drop = (e) => {
+    e.preventDefault();
+    const id = e.dataTransfer.getData('id');
+    const dragged = document.getElementById(id);
+    if (!e.target.classList.contains('todo')) return;
+    if (e.target.classList.contains('drag')) return;
+    dragged.classList.remove('drag');
+    dragged.classList.add('dropped');
+    e.target.classList.remove('hovered');
+
+    targetOrder = targetOrder > 4 ? '5' : targetOrder;
+
+    if (targetOrder >= dragged.style.order) {
+      dragged.style.order = targetOrder;
+      e.target.style.order = `${
+        parseInt(dragged.style.order) > 0
+          ? parseInt(dragged.style.order) - 1
+          : '1'
+      }`;
+    } else if (targetOrder < dragged.style.order) {
+      dragged.style.order = targetOrder;
+      e.target.style.order = `${
+        parseInt(dragged.style.order) < 5
+          ? parseInt(dragged.style.order) + 1
+          : '1'
+      }`;
+    }
+
+    document.querySelectorAll('.todo').forEach((el) => el);
+  };
+
   return (
-    <ul className='todos'>
+    <ul className='todos dropzone' onDrop={drop}>
       {todos.length === 0 ? (
         <li className='todo'>
           <h3 className='todo-name'>No todos!!</h3>
@@ -48,8 +110,19 @@ export default function Todo() {
               ? todo.status === filter
               : todo.status === todo.status
           )
-          .map((todo) => (
-            <li className='todo' key={todo.id} id={todo.id}>
+          .map((todo, index) => (
+            <li
+              onDragOver={allowDrop}
+              className='todo'
+              key={todo.id}
+              id={todo.id}
+              draggable='true'
+              onDragStart={drag}
+              onDragEnd={dragEnd}
+              style={{ order: index + 1 }}
+              onDragEnter={showOrderNumber}
+              onDragLeave={returnStyleToNormal}
+            >
               <button
                 className={`checkbox ${
                   todo.status === 'completed' && 'checked'
