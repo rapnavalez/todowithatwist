@@ -1,5 +1,6 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { TodoContext } from '../ContextProvider';
+import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 
 export default function Todo() {
   const { contextTodos, contextFilter, contextSetThenRetrieveTodos } =
@@ -37,126 +38,97 @@ export default function Todo() {
 
   //drag and drop functions below
 
-  let targetOrder;
-  const showOrderNumber = (e) => {
-    targetOrder = e.target.style.order;
-    if (!e.target.classList.contains('todo')) return;
-    e.target.classList.add('hovered');
-    return targetOrder;
+  const handleOnDragEnds = (result) => {
+    if (!result.destination) alert('would you like to delete that todo?');
+    return;
+    if (!result.destination);
+    const items = Array.from(todos);
+    const [reorderedItem] = items.splice(result.source.index, 1);
+    items.splice(result.destination.index, 0, reorderedItem);
+
+    setTodos(items);
+    setThenRetrieveTodos(items);
   };
 
-  const allowDrop = (e) => {
-    e.preventDefault();
-    if (e.target.getAttribute('draggable') != 'true') return;
-    e.dataTransfer.dropEffect = 'all';
-  };
-
-  const drag = (e) => {
-    e.dataTransfer.setData('id', e.target.id);
-    e.target.classList.add('drag');
-    e.target.classList.remove('dropped');
-  };
-
-  const dragEnd = (e) => {
-    e.target.classList.add('dropped');
-    e.target.classList.remove('drag');
-  };
-
-  const drop = (e) => {
-    e.preventDefault();
-    const id = e.dataTransfer.getData('id');
-    const dragged = document.getElementById(id);
-    if (!e.target.classList.contains('todo')) return;
-    if (e.target.classList.contains('drag')) return;
-    dragged.classList.remove('drag');
-    dragged.classList.add('dropped');
-    e.target.classList.remove('hovered');
-
-    targetOrder = targetOrder > 4 ? '5' : targetOrder;
-    if (targetOrder >= dragged.style.order) {
-      dragged.style.order = targetOrder;
-      e.target.style.order = `${
-        parseInt(dragged.style.order) > 0
-          ? parseInt(dragged.style.order) - 1
-          : '1'
-      }`;
-    } else if (targetOrder < dragged.style.order) {
-      dragged.style.order = targetOrder;
-      e.target.style.order = `${
-        parseInt(dragged.style.order) < 5
-          ? parseInt(dragged.style.order) + 1
-          : '1'
-      }`;
+  function getStyle(style, snapshot) {
+    if (!snapshot.isDropAnimating) {
+      return style;
     }
-  };
+    return {
+      ...style,
+      // cannot be 0, but make it super tiny
+      transitionDuration: `0.001s`,
+    };
+  }
 
   return (
-    <ul className='todos dropzone' onDrop={drop}>
-      {todos.length === 0 ? (
-        <li className='todo'>
-          <h3 className='todo-name'>No todos!!</h3>
-        </li>
-      ) : (
-        todos
-          .filter((todo) =>
-            filter !== 'all'
-              ? todo.status === filter
-              : todo.status === todo.status
-          )
-          .map((todo, index) => (
-            <li
-              onDragOver={allowDrop}
-              className='todo'
-              key={todo.id}
-              id={todo.id}
-              draggable='true'
-              onDragStart={drag}
-              onDragEnd={dragEnd}
-              style={{ order: index + 1 }}
-              onDragEnter={showOrderNumber}
-              onDragLeave={(e) => e.target.classList.remove('hovered')}
-            >
-              <button
-                className={`checkbox ${
-                  todo.status === 'completed' && 'checked'
-                }`}
-                type='submit'
-                onClick={updateStatus}
-                style={{
-                  animation: `${
-                    todo.status === 'completed'
-                      ? 'none'
-                      : 'checkboxAdded .5s forwards'
-                  }`,
-                }}
-              >
-                <img
-                  className='check-icon'
-                  src='./images/icon-check.svg'
-                  alt='checkbox'
-                />
-              </button>
-              <h3
-                className='todo-name'
-                style={{
-                  animation: `${
-                    todo.status === 'completed'
-                      ? 'none'
-                      : 'checkboxAdded .5s forwards'
-                  }`,
-                }}
-              >
-                {todo.name}
-              </h3>
-              <img
-                onClick={deleteTodo}
-                className='cross-icon'
-                src='./images/icon-cross.svg'
-                alt='checkbox'
-              />
-            </li>
-          ))
-      )}
-    </ul>
+    <DragDropContext onDragEnd={handleOnDragEnds}>
+      <Droppable droppableId='todos'>
+        {(provided, snapshot) => (
+          <ul
+            className={`todos ${snapshot.isDraggingOver && 'dragging-over'}`}
+            {...provided.droppableProps}
+            ref={provided.innerRef}
+          >
+            {todos.length === 0 ? (
+              <li className='todo'>
+                <h3 className='todo-name'>No todos!!</h3>
+              </li>
+            ) : (
+              todos
+                .filter((todo) =>
+                  filter !== 'all'
+                    ? todo.status === filter
+                    : todo.status === todo.status
+                )
+                .map((todo, index) => (
+                  <Draggable
+                    key={todo.id}
+                    draggableId={todo.id.toString()}
+                    index={index}
+                  >
+                    {(provided, snapshot) => (
+                      <li
+                        className={`todo ${snapshot.isDragging && 'drag'}`}
+                        key={todo.id}
+                        id={todo.id}
+                        {...provided.draggableProps}
+                        {...provided.dragHandleProps}
+                        ref={provided.innerRef}
+                        style={getStyle(
+                          provided.draggableProps.style,
+                          snapshot
+                        )}
+                      >
+                        <button
+                          className={`checkbox ${
+                            todo.status === 'completed' && 'checked'
+                          }`}
+                          type='submit'
+                          onClick={updateStatus}
+                        >
+                          <img
+                            className='check-icon'
+                            src='./images/icon-check.svg'
+                            alt='checkbox'
+                          />
+                        </button>
+                        <h3 className='todo-name'>{todo.name}</h3>
+                        <img
+                          onClick={deleteTodo}
+                          className='cross-icon'
+                          src='./images/icon-cross.svg'
+                          alt='checkbox'
+                        />
+                      </li>
+                    )}
+                  </Draggable>
+                ))
+            )}
+            {provided.placeholder}
+          </ul>
+        )}
+      </Droppable>
+    </DragDropContext>
   );
 }

@@ -135,6 +135,44 @@ body .app {
   }
 }
 
+@-webkit-keyframes dropped {
+  0% {
+    -webkit-transform: scale(0.8);
+            transform: scale(0.8);
+  }
+  50% {
+    -webkit-transform: scale(1.1);
+            transform: scale(1.1);
+  }
+  70% {
+    -webkit-transform: scale(0.9);
+            transform: scale(0.9);
+  }
+  100% {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+  }
+}
+
+@keyframes dropped {
+  0% {
+    -webkit-transform: scale(0.8);
+            transform: scale(0.8);
+  }
+  50% {
+    -webkit-transform: scale(1.1);
+            transform: scale(1.1);
+  }
+  70% {
+    -webkit-transform: scale(0.9);
+            transform: scale(0.9);
+  }
+  100% {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+  }
+}
+
 .attribution {
   font-size: 11px;
   text-align: center;
@@ -239,11 +277,6 @@ header {
   overflow: hidden;
 }
 
-.todo--create-new .checked {
-  -webkit-animation: checked 1s forwards;
-          animation: checked 1s forwards;
-}
-
 .todo--create-new .create-new-input {
   height: 100%;
   width: 80%;
@@ -310,16 +343,12 @@ header {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  -webkit-box-pack: baseline;
-      -ms-flex-pack: baseline;
-          justify-content: baseline;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
   border-bottom: 1px solid var(--very-light-grayish);
   padding: 20px;
   background: var(--primary-light);
-  -webkit-transition: all 0.25s;
-  transition: all 0.25s;
-  cursor: -webkit-grab;
-  cursor: grab;
 }
 
 .todos .todo .todo-name,
@@ -344,19 +373,16 @@ header {
 }
 
 .drag {
-  cursor: -webkit-grabbing;
-  cursor: grabbing;
   -webkit-box-shadow: 0px 0px 20px 0px var(--light-grayish);
           box-shadow: 0px 0px 20px 0px var(--light-grayish);
 }
 
 .dropped {
-  cursor: default;
   -webkit-box-shadow: 0px 0px 0px 0px var(--light-grayish);
           box-shadow: 0px 0px 0px 0px var(--light-grayish);
 }
 
-.hovered {
+.dragging-over {
   -webkit-box-shadow: 0px 0px 20px 0px var(--light-grayish);
           box-shadow: 0px 0px 20px 0px var(--light-grayish);
 }
