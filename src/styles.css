@@ -328,6 +328,10 @@ header {
       -ms-flex-pack: baseline;
           justify-content: baseline;
   list-style: none;
+  -webkit-transition: -webkit-box-shadow 0.5s ease-in-out;
+  transition: -webkit-box-shadow 0.5s ease-in-out;
+  transition: box-shadow 0.5s ease-in-out;
+  transition: box-shadow 0.5s ease-in-out, -webkit-box-shadow 0.5s ease-in-out;
 }
 
 .todos .todo {
@@ -349,6 +353,10 @@ header {
   border-bottom: 1px solid var(--very-light-grayish);
   padding: 20px;
   background: var(--primary-light);
+  -webkit-transition: -webkit-box-shadow 0.5s ease-in-out;
+  transition: -webkit-box-shadow 0.5s ease-in-out;
+  transition: box-shadow 0.5s ease-in-out;
+  transition: box-shadow 0.5s ease-in-out, -webkit-box-shadow 0.5s ease-in-out;
 }
 
 .todos .todo .todo-name,

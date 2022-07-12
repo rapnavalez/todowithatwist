@@ -39,8 +39,7 @@ export default function Todo() {
   //drag and drop functions below
 
   const handleOnDragEnds = (result) => {
-    if (!result.destination) alert('would you like to delete that todo?');
-    return;
+    if (!result.destination) return;
     if (!result.destination);
     const items = Array.from(todos);
     const [reorderedItem] = items.splice(result.source.index, 1);

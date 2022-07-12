@@ -5,6 +5,7 @@
   align-items: flex-start;
   justify-content: baseline;
   list-style: none;
+  transition: box-shadow 0.5s ease-in-out;
 
   .todo {
     min-height: 65px;
@@ -16,6 +17,7 @@
     border-bottom: 1px solid var(--very-light-grayish);
     padding: 20px;
     background: var(--primary-light);
+    transition: box-shadow 0.5s ease-in-out;
 
     .todo-name,
     h3 {
