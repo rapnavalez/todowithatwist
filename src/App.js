@@ -1,5 +1,4 @@
 import React from 'react';
-import Attribution from './components/Attribution';
 import Header from './components/Header';
 import Main from './components/Main';
 import { TodoProvider } from './ContextProvider';
@@ -11,7 +10,6 @@ function App() {
       <div className='App'>
         <Header />
         <Main />
-        <Attribution />
       </div>
     </TodoProvider>
   );

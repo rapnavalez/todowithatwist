@@ -10,14 +10,8 @@ export default function Todo() {
   const setThenRetrieveTodos = contextSetThenRetrieveTodos;
 
   const updateStatus = (e) => {
-    let id;
-    if (e.target.classList.contains('check-icon')) {
-      e.target.parentElement.classList.toggle('checked');
-      id = e.target.parentElement.parentElement.id;
-    } else if (e.target.classList.contains('checkbox')) {
-      e.target.classList.toggle('checked');
-      id = e.target.parentElement.id;
-    }
+    e.target.classList.toggle('checked');
+    let id = e.target.parentElement.id;
 
     let toBeUpdated = todos.filter((todo) => todo.id === parseInt(id));
     let notToBeUpdated = todos.filter((todo) => todo.id !== parseInt(id));
@@ -99,19 +93,13 @@ export default function Todo() {
                           snapshot
                         )}
                       >
-                        <button
-                          className={`checkbox ${
+                        <i
+                          className={`fa-solid fa-circle-check check-icon checkbox ${
                             todo.status === 'completed' && 'checked'
                           }`}
-                          type='submit'
                           onClick={updateStatus}
-                        >
-                          <img
-                            className='check-icon'
-                            src='./images/icon-check.svg'
-                            alt='checkbox'
-                          />
-                        </button>
+                        ></i>
+
                         <h3 className='todo-name'>{todo.name}</h3>
                         <img
                           onClick={deleteTodo}

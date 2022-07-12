@@ -18,8 +18,8 @@ html[data-theme='light'] {
 html[data-theme='dark'] {
   --gradient-bg: linear-gradient(
     90deg,
-    rgba(192, 88, 243, 1) 100%,
-    rgba(71, 218, 255, 1) 0%
+    rgba(192, 88, 243, 1) 0%,
+    rgba(71, 218, 255, 1) 100%
   );
   --primary-light: hsl(235, 21%, 11%);
   --very-light-grayish: hsl(235, 24%, 19%);
@@ -39,6 +39,28 @@ html[data-theme='dark'] {
 body {
   font-size: 18px;
   font-family: 'Josefin Sans', sans-serif;
+  -webkit-hyphens: auto;
+      -ms-hyphens: auto;
+          hyphens: auto;
+  background: var(--primary-light);
+}
+
+@media (max-width: 1200px) {
+  body {
+    font-size: 15px;
+  }
+}
+
+@media (max-width: 767.98px) {
+  body {
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 400px) {
+  body {
+    font-size: 11px;
+  }
 }
 
 body .app {
@@ -115,23 +137,47 @@ body .app {
 
 @-webkit-keyframes checkboxAdded {
   0% {
-    -webkit-transform: scale(0);
-            transform: scale(0);
+    -webkit-transform: scale(0.8);
+            transform: scale(0.8);
   }
-  100% {
+  50% {
+    -webkit-transform: scale(1.2);
+            transform: scale(1.2);
+  }
+  80% {
+    -webkit-transform: scale(0.9);
+            transform: scale(0.9);
+  }
+  90% {
     -webkit-transform: scale(1);
             transform: scale(1);
+  }
+  100% {
+    -webkit-transform: scale(0);
+            transform: scale(0);
   }
 }
 
 @keyframes checkboxAdded {
   0% {
-    -webkit-transform: scale(0);
-            transform: scale(0);
+    -webkit-transform: scale(0.8);
+            transform: scale(0.8);
   }
-  100% {
+  50% {
+    -webkit-transform: scale(1.2);
+            transform: scale(1.2);
+  }
+  80% {
+    -webkit-transform: scale(0.9);
+            transform: scale(0.9);
+  }
+  90% {
     -webkit-transform: scale(1);
             transform: scale(1);
+  }
+  100% {
+    -webkit-transform: scale(0);
+            transform: scale(0);
   }
 }
 
@@ -173,13 +219,75 @@ body .app {
   }
 }
 
+@-webkit-keyframes themeSwitch {
+  from {
+    -webkit-transform: translateY(-100%);
+            transform: translateY(-100%);
+  }
+  to {
+    -webkit-transform: translateY(0);
+            transform: translateY(0);
+  }
+}
+
+@keyframes themeSwitch {
+  from {
+    -webkit-transform: translateY(-100%);
+            transform: translateY(-100%);
+  }
+  to {
+    -webkit-transform: translateY(0);
+            transform: translateY(0);
+  }
+}
+
+@-webkit-keyframes themeSwitch2 {
+  from {
+    -webkit-transform: rotate(0);
+            transform: rotate(0);
+  }
+  to {
+    -webkit-transform: rotate(360deg);
+            transform: rotate(360deg);
+  }
+}
+
+@keyframes themeSwitch2 {
+  from {
+    -webkit-transform: rotate(0);
+            transform: rotate(0);
+  }
+  to {
+    -webkit-transform: rotate(360deg);
+            transform: rotate(360deg);
+  }
+}
+
 .attribution {
   font-size: 11px;
   text-align: center;
+  width: 100%;
+  color: var(--dark-grayish);
+  margin-bottom: 20px;
+}
+
+.attribution .raf {
+  color: var(--primary-blue);
 }
 
 .attribution a {
-  color: #3e52a3;
+  color: var(--dark-grayish);
+}
+
+.instructions {
+  width: 100%;
+  text-align: center;
+}
+
+.instructions h3 {
+  color: var(--dark-grayish);
+  font-size: 0.7rem;
+  font-weight: 700;
 }
 
 main {
@@ -230,6 +338,24 @@ header {
   gap: 30px;
 }
 
+@media (max-width: 1200px) {
+  .todoCont {
+    width: 50%;
+  }
+}
+
+@media (max-width: 767.98px) {
+  .todoCont {
+    width: 80%;
+  }
+}
+
+@media (max-width: 576px) {
+  .todoCont {
+    width: 95%;
+  }
+}
+
 .todo--top {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -253,6 +379,8 @@ header {
 
 .todo--top .theme-switch {
   cursor: pointer;
+  -webkit-transition: all 1s;
+  transition: all 1s;
 }
 
 .todo--create-new {
@@ -270,9 +398,9 @@ header {
       -ms-flex-pack: start;
           justify-content: flex-start;
   width: 100%;
-  height: 3.5em;
+  height: 5em;
   border-radius: 5px;
-  background-color: var(--primary-light);
+  background-color: var(--very-light-grayish);
   padding: 0 20px;
   overflow: hidden;
 }
@@ -285,6 +413,7 @@ header {
   font-size: 1.2em;
   background-color: transparent;
   font-family: 'Josefin Sans', sans-serif;
+  color: var(--dark-grayish);
 }
 
 .todo--create-new .create-new-input:focus {
@@ -293,7 +422,7 @@ header {
 
 .todos-wrapper {
   width: 100%;
-  background-color: var(--primary-light);
+  background-color: var(--very-light-grayish);
   border-radius: 5px;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -308,8 +437,6 @@ header {
   -webkit-box-pack: start;
       -ms-flex-pack: start;
           justify-content: flex-start;
-  -webkit-transition: all 0.5s ease-in-out;
-  transition: all 0.5s ease-in-out;
 }
 
 .todos {
@@ -350,9 +477,9 @@ header {
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
-  border-bottom: 1px solid var(--very-light-grayish);
+  border-bottom: 1px solid var(--light-grayish);
   padding: 20px;
-  background: var(--primary-light);
+  background: transparent;
   -webkit-transition: -webkit-box-shadow 0.5s ease-in-out;
   transition: -webkit-box-shadow 0.5s ease-in-out;
   transition: box-shadow 0.5s ease-in-out;
@@ -366,7 +493,7 @@ header {
   padding: 5px 10px;
   font-size: 1.1em;
   font-weight: 400;
-  color: var(--vary-dark-grayish);
+  color: var(--dark-grayish);
   background-color: transparent;
   font-family: 'Josefin Sans', sans-serif;
 }
@@ -377,7 +504,7 @@ header {
 
 .todos .checked ~ .todo-name {
   text-decoration: line-through;
-  color: var(--very-light-grayish);
+  color: var(--dark-grayish);
 }
 
 .drag {
@@ -395,45 +522,39 @@ header {
           box-shadow: 0px 0px 20px 0px var(--light-grayish);
 }
 
-.checkbox {
-  height: 25px;
-  width: 25px;
-  margin-right: 20px;
-  cursor: pointer;
-  border: 2px solid var(--light-grayish);
-  background-color: transparent;
+.check-icon {
+  font-size: 1.5rem;
   border-radius: 50%;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
+  border: 2px solid var(--light-grayish);
+  margin-right: 20px;
+  color: transparent;
+  cursor: pointer;
 }
 
-.checkbox:hover {
-  background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#fff)) padding-box, var(--gradient-bg) border-box;
-  background: linear-gradient(#fff, #fff) padding-box, var(--gradient-bg) border-box;
+.check-icon:hover {
+  background: -webkit-gradient(linear, left top, left bottom, from(var(--very-light-grayish)), to(var(--very-light-grayish))) padding-box, var(--gradient-bg) border-box;
+  background: linear-gradient(var(--very-light-grayish), var(--very-light-grayish)) padding-box, var(--gradient-bg) border-box;
+  border-radius: 50em;
   border: 2px solid transparent;
-}
-
-.checkbox img {
-  width: 15px;
-  height: 15px;
 }
 
 .checked {
-  background: var(--gradient-bg) border-box;
+  background: var(--gradient-bg);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  border-radius: 50%;
   border: 2px solid transparent;
+  margin-right: 20px;
 }
 
 .checked:hover {
-  background: var(--gradient-bg) border-box;
+  background: var(--gradient-bg);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  border-radius: 50%;
   border: 2px solid transparent;
-  opacity: 0.7;
+  margin-right: 20px;
+  opacity: 0.8;
 }
 
 .checkedInput {

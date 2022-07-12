@@ -1,8 +1,26 @@
 .attribution {
-    font-size: 11px;
-    text-align: center;
+  font-size: 11px;
+  text-align: center;
+  width: 100%;
+  color: var(--dark-grayish);
+  margin-bottom: 20px;
+
+  .raf {
+    color: var(--primary-blue);
+  }
 }
 
 .attribution a {
-    color: hsl(228, 45%, 44%);
+  color: var(--dark-grayish);
+}
+
+.instructions {
+  width: 100%;
+  text-align: center;
+
+  h3 {
+    color: var(--dark-grayish);
+    font-size: 0.7rem;
+    font-weight: 700;
+  }
 }

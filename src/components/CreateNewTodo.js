@@ -26,13 +26,15 @@ export default function CreateNewTodo() {
 
   return (
     <form className='todo--create-new'>
-      <button
-        className={`checkbox ${isChecked && 'checked'}`}
+      <i
+        className={`fa-solid fa-circle-check check-icon checkbox ${
+          isChecked && 'checked'
+        }`}
+        style={{
+          animation: `${isChecked ? 'checkboxAdded .75s forwards' : 'none'}`,
+        }}
         onClick={createTodo}
-        type='submit'
-      >
-        {isChecked && <img src='./images/icon-check.svg' alt='checkbox' />}
-      </button>
+      ></i>
       <input
         ref={createNewInput}
         className={`create-new-input ${isChecked && 'checkedInput'}`}

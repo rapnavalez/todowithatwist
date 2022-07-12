@@ -14,9 +14,9 @@
     flex-direction: row;
     align-items: center;
     justify-content: center;
-    border-bottom: 1px solid var(--very-light-grayish);
+    border-bottom: 1px solid var(--light-grayish);
     padding: 20px;
-    background: var(--primary-light);
+    background: transparent;
     transition: box-shadow 0.5s ease-in-out;
 
     .todo-name,
@@ -26,7 +26,7 @@
       padding: 5px 10px;
       font-size: 1.1em;
       font-weight: 400;
-      color: var(--vary-dark-grayish);
+      color: var(--dark-grayish);
       background-color: transparent;
       font-family: 'Josefin Sans', sans-serif;
     }
@@ -38,7 +38,7 @@
 
   .checked ~ .todo-name {
     text-decoration: line-through;
-    color: var(--very-light-grayish);
+    color: var(--dark-grayish);
   }
 }
 
