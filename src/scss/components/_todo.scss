@@ -7,6 +7,26 @@
   list-style: none;
   transition: box-shadow 0.5s ease-in-out;
 
+  .todo-empty {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    padding: 20px;
+
+    img {
+      width: 50%;
+      height: 50%;
+    }
+
+    h3 {
+      font-size: 1em;
+      color: var(--primary-blue);
+    }
+  }
+
   .todo {
     min-height: 65px;
     width: 100%;

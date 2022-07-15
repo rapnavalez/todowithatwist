@@ -49,7 +49,6 @@ export default function Todo() {
     }
     return {
       ...style,
-      // cannot be 0, but make it super tiny
       transitionDuration: `0.001s`,
     };
   }
@@ -64,8 +63,11 @@ export default function Todo() {
             ref={provided.innerRef}
           >
             {todos.length === 0 ? (
-              <li className='todo'>
-                <h3 className='todo-name'>No todos!!</h3>
+              <li className='todo-empty'>
+                <img src='./images/no-data.svg' alt='empty-todo' />
+                <h3 className='todo-name'>
+                  Congrats! You have nothing "todo" :)
+                </h3>
               </li>
             ) : (
               todos
@@ -106,6 +108,8 @@ export default function Todo() {
                           className='cross-icon'
                           src='./images/icon-cross.svg'
                           alt='checkbox'
+                          width='20px'
+                          height='20px'
                         />
                       </li>
                     )}
