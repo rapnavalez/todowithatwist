@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/todowithatwist/static/css/main.26ab9358.css",
+    "main.js": "/todowithatwist/static/js/main.406efd12.js",
+    "index.html": "/todowithatwist/index.html",
+    "main.26ab9358.css.map": "/todowithatwist/static/css/main.26ab9358.css.map",
+    "main.406efd12.js.map": "/todowithatwist/static/js/main.406efd12.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.26ab9358.css",
+    "static/js/main.406efd12.js"
+  ]
+}
